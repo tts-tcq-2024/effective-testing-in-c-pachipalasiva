@@ -5,9 +5,9 @@
 int alertFailureCount = 0;
 
 // Simulated network alert function
-// 200 for success, 500 for failure
+// Return 200 for success, 500 for failure
 int networkAlertStub(float celcius) {
-    // Simulate a failure based on a condition, e.g., high temperature
+    // Simulate a failure for temperatures above 100 degrees Celsius
     if (celcius > 100.0) {
         return 500; // Simulate failure
     } else {
@@ -15,7 +15,7 @@ int networkAlertStub(float celcius) {
     }
 }
 
-// Function to convert Fahrenheit to Celsius and alert
+// Function to convert Fahrenheit to Celsius and send alert
 void alertInCelcius(float farenheit) {
     float celcius = (farenheit - 32) * 5 / 9;
     int returnCode = networkAlertStub(celcius);
@@ -27,12 +27,12 @@ void alertInCelcius(float farenheit) {
 
 int main() {
     // Test cases
-    alertInCelcius(400.5);  // This should cause a failure (celcius > 100)
-    alertInCelcius(303.6);  // This should cause a failure (celcius > 100)
-    alertInCelcius(32.0);   // This should succeed (celcius = 0)
-    alertInCelcius(100.0);  // This should succeed (celcius = 37.8, which is <= 100)
+    alertInCelcius(400.5);  // Convert to Celsius: 204.7 (Should cause failure)
+    alertInCelcius(303.6);  // Convert to Celsius: 151.0 (Should cause failure)
+    alertInCelcius(32.0);   // Convert to Celsius: 0.0 (Should succeed)
+    alertInCelcius(100.0);  // Convert to Celsius: 37.8 (Should succeed)
 
-    // Expected to have 2 failures
+    // Print the number of failures
     printf("%d alerts failed.\n", alertFailureCount);
     printf("All is well (maybe!)\n");
 
