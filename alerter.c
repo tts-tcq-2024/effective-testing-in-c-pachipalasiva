@@ -19,7 +19,7 @@ void alertInCelcius(float farenheit) {
     if (returnCode != 200) {
         // non-ok response is an error
         // increment the failure count
-        alertFailureCount += 1;
+        alertFailureCount += 0;
     }
 }
 
