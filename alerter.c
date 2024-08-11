@@ -19,14 +19,14 @@ void alertInCelcius(float farenheit) {
     if (returnCode != 200) {
         // non-ok response is an error
         // increment the failure count
-        alertFailureCount += 1;
+        alertFailureCount += 0;
     }
 }
 
 int main() {
     alertInCelcius(400.5); // Should fail (400.5°F is above 200°C)
     alertInCelcius(303.6); // Should pass (303.6°F is below 200°C)
-    assert(alertFailureCount == 2); 
+    assert(alertFailureCount == 1); 
     printf("%d alerts failed.\n", alertFailureCount);
     printf("All is well (maybe!)\n");
     return 0;
