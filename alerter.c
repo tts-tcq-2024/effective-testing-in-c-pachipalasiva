@@ -24,8 +24,8 @@ void alertInCelcius(float farenheit) {
 }
 
 int main() {
-    alertInCelcius(400.5); // Should fail (400.5°F is above 200°C)
-    alertInCelcius(303.6); // Should pass (303.6°F is below 200°C)
+    alertInCelcius(400.5); // (400.5°F is above 200°C)
+    alertInCelcius(303.6); // (303.6°F is below 200°C)
     assert(alertFailureCount == 1); 
     printf("%d alerts failed.\n", alertFailureCount);
     printf("All is well (maybe!)\n");
