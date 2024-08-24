@@ -4,12 +4,12 @@
 int alertFailureCount = 0;
 
 int networkAlertStub(float celcius) {
-    printf("ALERT: Temperature is %.1f celcius.\n", celcius);
-    // Return 200 for ok
-    // Return 500 for not-ok if temperature exceeds a threshold (e.g., 200 degrees Celsius)
+    printf("ALERT: Temperature is %f celcius.\n", celcius);
+    // Simulate a failure if temperature exceeds a threshold (e.g., 200°C)
     if (celcius > 200) {
         return 500;
     }
+    // Return 200 for OK
     return 200;
 }
 
@@ -17,16 +17,38 @@ void alertInCelcius(float farenheit) {
     float celcius = (farenheit - 32) * 5 / 9;
     int returnCode = networkAlertStub(celcius);
     if (returnCode != 200) {
-        // non-ok response is an error
-        // increment the failure count
+        // non-ok response is not an error! Issues happen in life!
+        // let us keep a count of failures to report
+        // However, this code doesn't count failures!
+        // Add a test below to catch this bug. Alter the stub above, if needed.
         alertFailureCount += 0;
     }
 }
 
+void testAlertFailureCount() {
+    // Reset the failure count
+    alertFailureCount = 0;
+    
+    // Test cases
+    alertInCelcius(400.5);  // Should fail (204.722°C, above 200°C)
+    printf("After alertInCelcius(400.5), alertFailureCount = %d\n", alertFailureCount);
+    assert(alertFailureCount == 1);
+    
+    alertInCelcius(395.0);  // Should fail (200.0°C, exactly at 200°C threshold)
+    printf("After alertInCelcius(392.0), alertFailureCount = %d\n", alertFailureCount);
+    assert(alertFailureCount == 2);
+    
+    alertInCelcius(150);    // Should pass (65.556°C, below 200°C)
+    printf("After alertInCelcius(150), alertFailureCount = %d\n", alertFailureCount);
+    assert(alertFailureCount == 2);  // Count should remain the same
+
+    printf("All tests passed successfully!\n");
+}
+
 int main() {
-    alertInCelcius(400.5); // (400.5°F is above 200°C)
-    alertInCelcius(303.6); // (303.6°F is below 200°C)
-    assert(alertFailureCount == 1); 
+    // Run the test cases
+    testAlertFailureCount();
+    
     printf("%d alerts failed.\n", alertFailureCount);
     printf("All is well (maybe!)\n");
     return 0;
